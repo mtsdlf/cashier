@@ -5,14 +5,29 @@
   import CheckoutActions from './components/CheckoutActions.svelte';
   import ProductSelection from './components/ProductSelection.svelte';
 
+
   // Define your selected products array here
+  let totalAmount = 0.0;
   let selectedProducts = [];
+  let selectedCustomer = {
+    id: 1,
+    name: "luis"
+  }
+
 
   // Event handler for adding a product to the selectedProducts array
   function addProductToCart(product) {
-    selectedProducts = [...selectedProducts, product];
+    getTotal();
+    console.log(totalAmount);
   }
 
+  function getTotal() {
+    let total = 0;
+    selectedProducts.forEach(product => {
+   total = total + product.price ;
+   totalAmount = total;
+    })
+  }
   // Event handler for deleting the last product from selectedProducts
   function deleteLastProduct() {
     if (selectedProducts.length > 0) {
@@ -47,16 +62,21 @@
   </header>
 
   <main>
-    <ProductSearchButton on:addProduct={addProductToCart} />
+  
     <CustomerSelectionButton />
-    <InvoicePreview />
+    <InvoicePreview 
+      bind:totalAmount={totalAmount}
+      bind:selectedCustomer={selectedCustomer}
+      
+    />
     <CheckoutActions
       on:deleteLastProduct={deleteLastProduct}
       on:proceedToInvoice={proceedToInvoice}
       on:cancelInvoice={cancelInvoice}
       on:deleteAllSelectedProducts={deleteAllSelectedProducts}
     />
-    <ProductSelection {selectedProducts} />
+    <ProductSelection  bind:selectedProducts={selectedProducts}
+    on:addProductToCart={addProductToCart} />
   </main>
 </div>
 

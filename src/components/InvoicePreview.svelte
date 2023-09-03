@@ -1,19 +1,19 @@
 <script>
-  export let invoiceType = 'Regular Invoice'; // Default invoice type
+  export let invoiceType = '"A"'; // Default invoice type
   export let selectedCustomer = null; // Default selected customer
-  export let total = 0.0; // Default total amount
+  export let totalAmount = 0.00; // Default total amount
 
   // Function to format the total amount with currency symbol
-  function formatTotal() {
-    return `$${total.toFixed(2)}`;
+  function formatTotalAmount() {
+    return `$${totalAmount.toFixed(2)}`;
   }
 </script>
 
 <div class="invoice-preview">
   <h3>Invoice Preview</h3>
-  <p><strong>Invoice Type:</strong> {invoiceType}</p>
-  <p><strong>Customer:</strong> {selectedCustomer ? selectedCustomer.name : 'Not selected'}</p>
-  <p><strong>Total Amount:</strong> {formatTotal()}</p>
+  <p><strong>Factura Tipo:</strong> {invoiceType}</p>
+  <p><strong>Cliente:</strong> {selectedCustomer.name}</p>
+  <p><strong>Final $</strong> {totalAmount.toFixed(2)}</p>
 </div>
 
 <style>

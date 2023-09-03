@@ -1,7 +1,11 @@
+
 <script>
+   import { createEventDispatcher } from 'svelte';
+   const dispatch = createEventDispatcher();
     let barcodeInput = "";
     let productSearch = "";
-    let matchingProducts = [];
+    export let selectedProducts = [];
+    
   
     // Simulated list of products (replace with your actual data)
     let productList = [
@@ -15,21 +19,22 @@
       if (barcodeInput) {
         const matchedProduct = productList.find((product) => product.barcode === barcodeInput);
         if (matchedProduct) {
-          addProduct(matchedProduct);
+          addProductToCart(matchedProduct);
         }
       }
     }
   
     function searchProducts() {
       // Filter products based on the search query
-      matchingProducts = productList.filter((product) =>
+      selectedProducts = productList.filter((product) =>
         product.name.toLowerCase().includes(productSearch.toLowerCase())
       );
     }
   
-    function addProduct(product) {
+    function addProductToCart(product) {
       // Logic to add the selected product to the cart or perform other actions
-      console.log(`Added product: ${product.name}`);
+      selectedProducts.push(product)
+      dispatch('addProductToCart');
     }
   </script>
   
@@ -44,7 +49,7 @@
         bind:value={barcodeInput}
         on:input={scanBarcode}
       />
-      <button on:click={scanBarcode}>Scan</button>
+
     </div>
   
     <!-- Product Search -->
@@ -60,13 +65,13 @@
   
     <!-- List of Matching Products -->
     <ul class="product-list">
-      {#each matchingProducts as product (product.id)}
+      {#each selectedProducts as product (product.id)}
         <li class="product-item">
           <div class="product-details">
             <h3>{product.name}</h3>
             <p>Price: ${product.price.toFixed(2)}</p>
           </div>
-          <button on:click={() => addProduct(product)}>Add</button>
+          <button on:click={() => addProductToCart(product)}>Add</button>
         </li>
       {/each}
     </ul>
