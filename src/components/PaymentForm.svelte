@@ -21,6 +21,6 @@
   </section>
   
   <style>
-    /* PaymentForm styles go here */
+
   </style>
   

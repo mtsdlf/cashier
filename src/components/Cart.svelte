@@ -22,10 +22,8 @@
         </li>
       {/each}
     </ul>
-    <p>Total: ${getTotal().toFixed(2)}</p>
-    <!-- Add checkout button and other cart actions -->
   </section>
   
   <style>
-    /* Cart styles go here */
+
   </style>

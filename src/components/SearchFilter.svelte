@@ -15,6 +15,5 @@
   </section>
   
   <style>
-    /* SearchFilter styles go here */
   </style>
   

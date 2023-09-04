@@ -1,25 +1,18 @@
 
 <script>
-   import { createEventDispatcher } from 'svelte';
-   const dispatch = createEventDispatcher();
-    let barcodeInput = "";
-    let productSearch = "";
-    export let selectedProducts = [];
-    
-  
-    // Simulated list of products (replace with your actual data)
-    let productList = [
-      { id: 1, name: "Product A", barcode: "12345", price: 10.99 },
-      { id: 2, name: "Product B", barcode: "67890", price: 15.99 },
-      // Add more products here
-    ];
-  
+  import { createEventDispatcher } from 'svelte';
+  const dispatch = createEventDispatcher();
+  let barcodeInput = "";
+  let productSearch = "";
+  export let selectedProducts = [];
+  export let productList = [];
     function scanBarcode() {
       // Simulate barcode scanning logic here
       if (barcodeInput) {
         const matchedProduct = productList.find((product) => product.barcode === barcodeInput);
         if (matchedProduct) {
           addProductToCart(matchedProduct);
+          barcodeInput = "";
         }
       }
     }

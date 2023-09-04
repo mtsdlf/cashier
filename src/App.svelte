@@ -1,12 +1,43 @@
 <script>
-  import ProductSearchButton from './components/ProductSearchButton.svelte';
+
+
+// Import amqp10
+import * as amqp from 'amqp10';
   import CustomerSelectionButton from './components/CustomerSelectionButton.svelte';
   import InvoicePreview from './components/InvoicePreview.svelte';
   import CheckoutActions from './components/CheckoutActions.svelte';
   import ProductSelection from './components/ProductSelection.svelte';
 
 
+// Create a new AMQP client
+const client = new amqp.Client();
+
+// Connect to the AMQP server
+client.connect('amqp://localhost')
+  .then(() => {
+    // Create a sender link
+    const sender = client.createSender('pos_q');
+
+    // Send a message
+    sender.send({ body: 'Hello, RabbitMQ!' });
+
+    // Create a receiver link
+    const receiver = client.createReceiver('pos_q');
+
+    // Receive messages
+    receiver.on('message', (message) => {
+      console.log('Received message:', message.body);
+    });
+  })
+  .catch((error) => {
+    console.error('Error connecting to AMQP server:', error);
+  });
+
+
   // Define your selected products array here
+  let productList = [];
+
+  let invoiceType = "C";
   let totalAmount = 0.0;
   let selectedProducts = [];
   let selectedCustomer = {
@@ -14,6 +45,7 @@
     name: "luis"
   }
 
+ 
 
   // Event handler for adding a product to the selectedProducts array
   function addProductToCart(product) {
@@ -67,15 +99,19 @@
     <InvoicePreview 
       bind:totalAmount={totalAmount}
       bind:selectedCustomer={selectedCustomer}
+      bind:invoiceType={invoiceType}
       
     />
+
     <CheckoutActions
       on:deleteLastProduct={deleteLastProduct}
       on:proceedToInvoice={proceedToInvoice}
       on:cancelInvoice={cancelInvoice}
       on:deleteAllSelectedProducts={deleteAllSelectedProducts}
     />
-    <ProductSelection  bind:selectedProducts={selectedProducts}
+    <ProductSelection 
+    bind:selectedProducts={selectedProducts}
+    bind:productList={productList}
     on:addProductToCart={addProductToCart} />
   </main>
 </div>

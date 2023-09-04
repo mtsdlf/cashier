@@ -25,7 +25,7 @@
 </div>
 
 <style>
-  /* Add your CSS styles here */
+
   .selected-product-list {
     border: 1px solid #ccc;
     padding: 10px;

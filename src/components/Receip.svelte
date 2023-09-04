@@ -17,6 +17,6 @@
   </section>
   
   <style>
-    /* Receipt styles go here */
+
   </style>
   

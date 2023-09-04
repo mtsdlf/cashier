@@ -17,7 +17,7 @@
 </div>
 
 <style>
-  /* Add your CSS styles here */
+
   .invoice-preview {
     border: 1px solid #ccc;
     padding: 10px;
